@@ -5,8 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 from _datetime import datetime
 import pymysql
 
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:222850@127.0.0.1:3306/movie"
+app = Flask(__name__)  # 指定当前进程的名字Flask('__main__') 和Flask(__name__) 作用相同
+# Flask('__main__')
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:123456@127.0.0.1:3306/movie"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 db = SQLAlchemy(app)
