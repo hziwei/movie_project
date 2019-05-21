@@ -18,11 +18,11 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">添加角色</h3>
                         </div>
-                        <form role="form">
+                        <form role="form"method="post"action="/admin/role/add/1/">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="input_name">角色名称</label>
-                                    <input type="text" class="form-control" id="input_name" placeholder="请输入角色名称！">
+                                    <input type="text" class="form-control" id="input_name" placeholder="请输入角色名称！"name="name">
                                 </div>
                                 <div class="form-group" id="auth_list">
                                     <div class="col-md-12">
@@ -30,7 +30,9 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label>
-                                            <input type="checkbox" name="input_url"> 添加标签
+                                            {% for item in a_list %}
+                                            <input type="checkbox" name="auths[]" value="{{ item.id }}"> {{ item.name }}
+                                            {% endfor %}
                                         </label>
                                     </div>
                                 </div>

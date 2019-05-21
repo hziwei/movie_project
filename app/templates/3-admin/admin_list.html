@@ -39,20 +39,37 @@
                                     <th>管理员角色</th>
                                     <th>添加时间</th>
                                 </tr>
+                                {% for item in a_list %}
                                 <tr>
-                                    <td>1</td>
-                                    <td>jinlong</td>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.name }}</td>
+                                    {% if item.is_super==0%}
                                     <td>普通管理员</td>
-                                    <td>系统管理员</td>
-                                    <td>2017-06-01</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>jianbo</td>
+                                    {% else %}
                                     <td>超级管理员</td>
-                                    <td>系统管理员</td>
-                                    <td>2017-06-01</td>
+                                    {% endif %}
+                                    {% for i in r_list %}
+                                    {% if item.role_id==i.id %}
+                                    <td>{{ i.name }}</td>
+                                    {% endif %}
+                                    {% endfor %}
+                                    <td>{{ item.addtime }}</td>
                                 </tr>
+                                {% endfor %}
+                                <!--<tr>-->
+                                    <!--<td>1</td>-->
+                                    <!--<td>jinlong</td>-->
+                                    <!--<td>普通管理员</td>-->
+                                    <!--<td>系统管理员</td>-->
+                                    <!--<td>2017-06-01</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>2</td>-->
+                                    <!--<td>jianbo</td>-->
+                                    <!--<td>超级管理员</td>-->
+                                    <!--<td>系统管理员</td>-->
+                                    <!--<td>2017-06-01</td>-->
+                                <!--</tr>-->
                                 </tbody>
                             </table>
                         </div>

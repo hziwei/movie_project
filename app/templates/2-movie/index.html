@@ -27,6 +27,7 @@
 </head>
 
 <body>
+<div style="position: relative;top: 10px;right: 10px;background: #2D64B3;">{{ name }}</div>
 <!--导航-->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -153,24 +154,32 @@
                     </tr>
                 </table>
             </div>
+            {% for item in m_list %}
             <div class="col-md-3">
                 <div class="movielist text-center">
                     <!--<img data-original="holder.js/262x166"
                              class="img-responsive lazy center-block" alt="">-->
-                    <img src="holder.js/262x166" class="img-responsive center-block" alt="">
+                    <img src="/static/image/{{ item.logo }}" style="height: 166px;width: 262px;" class="img-responsive center-block" alt="">
                     <div class="text-left" style="margin-left:auto;margin-right:auto;width:210px;">
-                        <span style="color:#999;font-style: italic;">环太平洋</span><br>
+                        <span style="color:#999;font-style: italic;">{{ item.title }}</span><br>
                         <div>
+                            {% for i in range(5) %}
+                            {% if i < item.star %}
                             <span class="glyphicon glyphicon-star" style="color:#FFD119"></span>
-                            <span class="glyphicon glyphicon-star" style="color:#FFD119"></span>
-                            <span class="glyphicon glyphicon-star" style="color:#FFD119"></span>
+                            {% else %}
                             <span class="glyphicon glyphicon-star-empty" style="color:#FFD119"></span>
-                            <span class="glyphicon glyphicon-star-empty" style="color:#FFD119"></span>
+                            {% endif %}
+                            {% endfor %}
+                            <!--<span class="glyphicon glyphicon-star" style="color:#FFD119"></span>-->
+                            <!--<span class="glyphicon glyphicon-star" style="color:#FFD119"></span>-->
+                            <!--<span class="glyphicon glyphicon-star-empty" style="color:#FFD119"></span>-->
+
                         </div>
                     </div>
-                    <a href="/play/1/" class="btn btn-primary" target="_blank" role="button"><span class="glyphicon glyphicon-play"></span>&nbsp;播放</a>
+                    <a href="/play/{{ item.id }}/" class="btn btn-primary" target="_blank" role="button"><span class="glyphicon glyphicon-play"></span>&nbsp;播放</a>
                 </div>
             </div>
+            {% endfor %}
             <div class="col-md-3">
                 <div class="movielist text-center">
                     <!--<img data-original="holder.js/262x166"

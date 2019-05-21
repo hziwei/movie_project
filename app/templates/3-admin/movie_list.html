@@ -42,22 +42,24 @@
                                     <th>上映时间</th>
                                     <th>操作事项</th>
                                 </tr>
+                                {% for item in m_list %}
                                 <tr>
-                                    <td>1</td>
-                                    <td>环太平洋</td>
-                                    <td>5分钟</td>
-                                    <td>科幻</td>
-                                    <td>美国</td>
-                                    <td>5</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>2017-01-01</td>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.title }}</td>
+                                    <td>{{ item.length }}</td>
+                                    <td>{{ t_list[item.tag_id].name}}</td>
+                                    <td>{{item.area }}</td>
+                                    <td>{{ item.star }}</td>
+                                    <td>{{ item.playnum }}</td>
+                                    <td>{{ item.commentnum }}</td>
+                                    <td>{{ item.realese_time }}</td>
                                     <td>
                                         <a class="label label-success">编辑</a>
                                         &nbsp;
                                         <a class="label label-danger">删除</a>
                                     </td>
                                 </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

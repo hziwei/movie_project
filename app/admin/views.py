@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from .import admin
-from flask import render_template
+from flask import render_template, request
+from app.models import *
+
+import datetime,time
 
 
 @admin.route("/")
@@ -23,30 +26,56 @@ def login():
 
 
 # 标签
-@admin.route("/tag/add/1/")
+@admin.route("/tag/add/1/", methods=['POST', 'GET'])
 def tag_add():
+    if request.method == "POST":
+        tag = Tag()
+        tag.name = request.form['name']
+        tag.addtime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+        db.session.add(tag)
+        db.session.commit()
     return render_template('./3-admin/tag_add.html')
     pass
 
 
 @admin.route("/tag/list/<int:p>/")
 def tag_list(p):
-    print(p)
-    return render_template('./3-admin/tag_list.html')
+    t_list = Tag.query.all()
+    return render_template('./3-admin/tag_list.html', t_list=t_list)
     pass
 
 
 # 电影
-@admin.route("/movie/add/1/")
+@admin.route("/movie/add/1/", methods=['POST', 'GET'])
 def movie_add():
-    return render_template('./3-admin/movie_add.html')
+    t_list = Tag.query.all()
+    if request.method == "POST":
+        movie = Movie()
+        movie.title = request.form['title']
+        movie.url = request.form['url']
+        movie.info = request.form['info']
+        movie.logo = request.form['logo']
+        movie.star = request.form['star']
+        movie.tag_id = request.form['tag_id']
+        movie.area = request.form['area']
+        movie.length = request.form['length']
+        movie.realese_time = request.form['realese_time']
+        movie.addtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+        try:
+            db.session.add(movie)
+            db.session.commit()
+        except Exception as ex:
+            print(ex.args)
+        print(movie)
+    return render_template('./3-admin/movie_add.html', t_list=t_list)
     pass
 
 
 @admin.route("/movie/list/<int:p>/")
 def movie_list(p):
-    print(p)
-    return render_template('./3-admin/movie_list.html')
+    m_list = Movie.query.all()
+    t_list = Tag.query.all()
+    return render_template('./3-admin/movie_list.html', m_list=m_list, t_list=t_list)
     pass
 
 
@@ -79,30 +108,47 @@ def comment_list(p):
 
 
 # 角色
-@admin.route("/role/add/1/")
+@admin.route("/role/add/1/", methods=['POST', 'GET'])
 def role_add():
-    return render_template('./3-admin/role_add.html')
+    a_list = Auth.query.all()
+    if request.method == 'POST':
+        role = Role()
+        role.name = request.form['name']
+        role.auths = ','.join(request.form.getlist('auths[]'))
+        role.addtime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+        db.session.add(role)
+        db.session.commit()
+        pass
+    return render_template('./3-admin/role_add.html',a_list=a_list)
     pass
 
 
 @admin.route("/role/list/<int:p>/")
 def role_list(p):
-    print(p)
-    return render_template('./3-admin/role_list.html')
+    r_list = Role.query.all()
+    return render_template('./3-admin/role_list.html', r_list=r_list)
     pass
 
 
 # 权限
-@admin.route("/auth/add/1/")
+@admin.route("/auth/add/1/", methods=['POST', 'GET'])
 def auth_add():
+    if request.method == 'POST':
+        auth = Auth()
+        auth.name = request.form['name']
+        auth.url = request.form['url']
+        auth.addtime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+        db.session.add(auth)
+        db.session.commit()
+        pass
     return render_template('./3-admin/auth_add.html')
     pass
 
 
 @admin.route("/auth/list/<int:p>/")
 def auth_list(p):
-    print(p)
-    return render_template('./3-admin/auth_list.html')
+    a_list = Auth.query.all()
+    return render_template('./3-admin/auth_list.html', a_list=a_list)
     pass
 
 
@@ -121,16 +167,27 @@ def role_auth_list(p):
 
 
 # 管理员
-@admin.route("/admin/add/1/")
+@admin.route("/admin/add/1/",methods=['POST', 'GET'])
 def admin_add():
-    return render_template('./3-admin/admin_add.html')
+    r_list = Role.query.all()
+    if request.method == 'POST':
+        admin = Admin()
+        admin.name = request.form['name']
+        admin.pwd = request.form['pwd']
+        admin.role_id = request.form['role_id']
+        admin.addtime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+        db.session.add(admin)
+        db.session.commit()
+        pass
+    return render_template('./3-admin/admin_add.html', r_list=r_list)
     pass
 
 
 @admin.route("/admin/list/<int:p>/")
 def admin_list(p):
-    print(p)
-    return render_template('./3-admin/admin_list.html')
+    r_list = Role.query.all()
+    a_list = Admin.query.all()
+    return render_template('./3-admin/admin_list.html', a_list=a_list, r_list=r_list)
     pass
 
 
@@ -158,16 +215,23 @@ def userloginlog_list(p):
 
 
 # 预告管理
-@admin.route('/preview/add/1/')
+@admin.route('/preview/add/1/', methods=['POST', 'GET'])
 def preview_add():
+    if request.method == "POST":
+        previesw = Previesw()
+        previesw.title = request.form['title']
+        previesw.logo = request.form['logo']
+        previesw.addtime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+        db.session.add(previesw)
+        db.session.commit()
     return render_template('./3-admin/preview_add.html')
     pass
 
 
 @admin.route('/preview/list/<int:p>/')
 def preview_list(p):
-    print(p)
-    return render_template('./3-admin/preview_list.html')
+    p_list = Previesw.query.all()
+    return render_template('./3-admin/preview_list.html', p_list=p_list)
     pass
 
 
@@ -177,6 +241,7 @@ def moviecol_list(p):
     print(p)
     return render_template('./3-admin/moviecol_list.html')
     pass
+
 
 # 修改密码页
 @admin.route("/pwd/")

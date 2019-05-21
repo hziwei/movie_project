@@ -66,7 +66,11 @@
                     <a class="curlink" href="logout.html"><span class="glyphicon glyphicon-log-out"></span>&nbsp;退出</a>
                 </li>
                 <li>
-                    <a class="curlink" href="/user/"><span class="glyphicon glyphicon-user"></span>&nbsp;会员</a>
+                    {% if use %}
+                    <a class="curlink" href="/user/{{ use.id }}/"><span class="glyphicon glyphicon-user"></span>&nbsp;会员</a>
+                    {% else %}
+                    <a class="curlink" href="/user/0/"><span class="glyphicon glyphicon-user"></span>&nbsp;会员</a>
+                    {% endif %}
                 </li>
             </ul>
         </div>
@@ -84,7 +88,7 @@
                     <h3 class="panel-title"><span class="glyphicon glyphicon-log-in"></span>&nbsp;会员登录</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form role="form"method="post"action="/login/">
                         <fieldset>
                             <div class="form-group">
                                 <label for="input_contact"><span class="glyphicon glyphicon-user"></span>&nbsp;账号</label>
@@ -96,7 +100,8 @@
                                 <input id="input_password" class="form-control input-lg" placeholder="密码" name="password" type="password" value="">
                             </div>
                             <div class="col-md-12" id="error_password"></div>
-                            <a href="/user/1/" class="btn btn-lg btn-success btn-block">登录</a>
+                            <button type="submit" class="btn btn-lg btn-success btn-block">登录</button>
+                            <!--<a href="/user/1/" class="btn btn-lg btn-success btn-block">登录</a>-->
                         </fieldset>
                     </form>
                 </div>

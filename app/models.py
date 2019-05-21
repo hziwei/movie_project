@@ -4,8 +4,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from _datetime import datetime
 import pymysql
+from app import app
 
-app = Flask(__name__)  # 指定当前进程的名字Flask('__main__') 和Flask(__name__) 作用相同
+# app = Flask(__name__)  # 指定当前进程的名字Flask('__main__') 和Flask(__name__) 作用相同
 # Flask('__main__')
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:123456@127.0.0.1:3306/movie"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
@@ -23,7 +24,7 @@ class User(db.Model):
     phone = db.Column(db.String(11), unique=True)  # 手机号码
     info = db.Column(db.Text)  # 个性简介
     face = db.Column(db.String(255))  # 头像
-    addtime = db.Column(db.DateTime, index=True, default=datetime.now)  # 注册实践
+    addtime = db.Column(db.DateTime, index=True, default=datetime.now)  # 注册时间
     uuid = db.Column(db.String(255), unique=True)  # 唯一标识符
     userlogs = db.relationship('Userlog', backref='user')  # 会员日志外间关系
     comments = db.relationship('Comment', backref='user')  # 评论外键关系关联
@@ -70,19 +71,16 @@ class Movie(db.Model):
     commentnum = db.Column(db.BigInteger)  # 评论数
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'))  # 所属标签
     area = db.Column(db.String(255))  # 上映地区
-    realese_time = db.Column(db.Time)  # 上映时间
+    realese_time = db.Column(db.Date)  # 上映时间
     length = db.Column(db.String(100))  # 时长
     addtime = db.Column(db.DateTime, index=True, default=datetime.now)  # 添加时间
-    comments = db.relationship("Comment",backref='movie')
-    
+    comments = db.relationship("Comment", backref='movie')
 
     def __repr__(self):
         return "Movie %r" % self.title
 
 
-
 # 上映预告
-
 class Previesw(db.Model):
     __tablename = 'preview'
     id = db.Column(db.Integer, primary_key=True)  # 标号

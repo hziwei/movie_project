@@ -17,32 +17,32 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">添加电影</h3>
                         </div>
-                        <form role="form">
+                        <form role="form"action="/admin/movie/add/1/"method="post">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="input_title">片名</label>
-                                    <input type="text" class="form-control" id="input_title" placeholder="请输入片名！">
+                                    <input type="text" class="form-control" name="title" id="input_title" placeholder="请输入片名！">
                                 </div>
                                 <div class="form-group">
                                     <label for="input_url">文件</label>
-                                    <input type="file" id="input_url">
+                                    <input type="file" id="input_url"name="url">
                                     <div style="margin-top:5px;">
                                         <div id="moviecontainer"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="input_info">介绍</label>
-                                    <textarea class="form-control" rows="10" id="input_info"></textarea>
+                                    <textarea class="form-control" rows="10" id="input_info"name="info"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="input_logo">封面</label>
-                                    <input type="file" id="input_logo">
+                                    <input type="file" id="input_logo"name="logo">
                                     <img data-src="holder.js/262x166" style="margin-top:5px;" class="img-responsive"
                                          alt="">
                                 </div>
                                 <div class="form-group">
                                     <label for="input_star">星级</label>
-                                    <select class="form-control" id="input_star">
+                                    <select class="form-control" id="input_star"name="star">
                                         <option value="1">1星</option>
                                         <option value="2">2星</option>
                                         <option value="3">3星</option>
@@ -52,26 +52,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="input_tag_id">标签</label>
-                                    <select class="form-control" id="input_tag_id">
-                                        <option value="1">科幻</option>
-                                        <option value="2">冒险</option>
-                                        <option value="3">爱情</option>
-                                        <option value="4">动作</option>
-                                        <option value="5">战争</option>
+                                    <select class="form-control" id="input_tag_id"name="tag_id">
+                                        {% for item in t_list %}
+                                        <option value="1">{{ item.name }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="input_area">地区</label>
-                                    <input type="text" class="form-control" id="input_area" placeholder="请输入地区！">
+                                    <input type="text" class="form-control" id="input_area" placeholder="请输入地区！"name="area">
                                 </div>
                                 <div class="form-group">
                                     <label for="input_length">片长</label>
-                                    <input type="text" class="form-control" id="input_length" placeholder="请输入片长！">
+                                    <input type="text" class="form-control" id="input_length" placeholder="请输入片长！"name="length">
                                 </div>
                                 <div class="form-group">
                                     <label for="input_release_time">上映时间</label>
                                     <input type="text" class="form-control" id="input_release_time"
-                                           placeholder="请选择上映时间！">
+                                           placeholder="请选择上映时间！"name="realese_time">
                                 </div>
                             </div>
                             <div class="box-footer">

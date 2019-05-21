@@ -36,16 +36,18 @@
                                     <th>添加时间</th>
                                     <th>操作事项</th>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>科幻</td>
-                                    <td>2017-06-01</td>
+                                {% for item in t_list %}
+                                    <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.addtime }}</td>
                                     <td>
                                         <a class="label label-success">编辑</a>
                                         &nbsp;
                                         <a class="label label-danger">删除</a>
                                     </td>
-                                </tr>
+                                    </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
